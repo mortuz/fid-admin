@@ -98,11 +98,12 @@ class UsersController < ApplicationController
     end
 
     def send_email
+      host = Rails.env.development? ? "http://localhost" : "https://awesome-fidiyo.herokuapp.com"
       # setup recipient
       email = params[:recover][:email]
       name = @user.name
       token = @user.recovery_token
-      message = "<html><body><p>Hello #{name}, Click <a href='http://localhost:3000/reset?t=#{token}'>http://localhost:3000/reset?t=#{token}</a> to reset your password.</p></body></html>"
+      message = "<html><body><p>Hello #{name}, Click <a href='#{host}/reset?t=#{token}'>#{host}/reset?t=#{token}</a> to reset your password.</p></body></html>"
       puts message
       # First, instantiate the Mailgun Client with your API key
       mg_client = Mailgun::Client.new 'key-9793adf968a4fb57cc6f619b58b98d4c'

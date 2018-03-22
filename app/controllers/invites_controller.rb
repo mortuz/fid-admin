@@ -56,10 +56,11 @@ class InvitesController < ApplicationController
     end
 
     def send_email
+      host = Rails.env.development? ? "http://localhost" : "https://awesome-fidiyo.herokuapp.com"      
       email = params[:invite][:email]
       name = params[:invite][:name]
       token = @invite.invite_token
-      message = "<html><body><p>Hello #{name}! You have been added to an <strong>Awesome App</strong>. Click <a href='http://localhost:3000/users/new?t=#{token}'>http://localhost:3000/users/new?t=#{token}</a> to access your account.</p></body></html>"
+      message = "<html><body><p>Hello #{name}! You have been added to an <strong>Awesome App</strong>. Click <a href='#{host}/users/new?t=#{token}'>#{host}/users/new?t=#{token}</a> to access your account.</p></body></html>"
       sender = "#{current_user.name} <#{current_user.email}>"
       puts message
       # First, instantiate the Mailgun Client with your API key
