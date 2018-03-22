@@ -1,7 +1,7 @@
 class MailController < ApplicationController
   require 'mailgun'
-
   before_action :require_user
+  skip_before_action :verify_authenticity_token
   
   def new
     

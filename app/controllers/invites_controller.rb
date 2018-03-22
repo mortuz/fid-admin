@@ -1,7 +1,7 @@
 class InvitesController < ApplicationController
   require 'mailgun'
   before_action :require_admin
-  
+
   def index
     @invites = Invite.all
   end
@@ -18,9 +18,9 @@ class InvitesController < ApplicationController
     if @invite.save
       flash[:success] = "#{@invite.name} successfully added"
       
-      if sendEmail
-        send_email
-      end      
+      # if sendEmail
+      send_email
+      # end      
       redirect_to invites_path
     else
       render 'new'

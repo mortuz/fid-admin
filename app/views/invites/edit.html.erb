@@ -19,11 +19,11 @@
 
         <div class="form-group">
           <label>
-            <%= check_box_tag :send_email %> Resend email to inform user
+            <%= check_box_tag :send_email %> Select if you want to resend email requesting password reset to user.
           </label>
         </div>
   
-        <%= f.submit "Add people", class: "btn btn-primary" %>
+        <%= f.submit "Save", class: "btn btn-primary" %>
       <% end %>
       <%= link_to  "Cancel", invites_path, class: "btn btn-link pl-0" %>
     </div>
