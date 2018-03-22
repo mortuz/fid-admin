@@ -1,6 +1,7 @@
 class InvitesController < ApplicationController
   require 'mailgun'
   before_action :require_admin
+  skip_before_action :verify_authenticity_token, only: [:create]
 
   def index
     @invites = Invite.all
@@ -35,7 +36,7 @@ class InvitesController < ApplicationController
     @invite = Invite.find(params[:id])
     sendEmail = params[:send_email]
     puts @invite.invite_token
-    if @invite.invite_token != ''
+    if @invite.invite_token
       if @invite.update(invite_params)
         flash[:success] = "User successfully updated"
 

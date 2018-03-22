@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   # before_action :require_admin
+  skip_before_action :verify_authenticity_token, only: [:postRecover]
   def new
     token = params[:t]
     @invite = Invite.find_by invite_token: token
@@ -36,12 +37,14 @@ class UsersController < ApplicationController
     
     @user = User.find_by recovery_token: token
     if @user      
+      @user.recovery_token = nil
       if @user.update(user_params)
         flash[:success] = "You have successfully created passsword"
+        redirect_to login_path
       else
         flash[:error] = "Something went wrong"
+        redirect_to root_path
       end      
-      redirect_to root_path
     else
       redirect_to root_path
     end
@@ -59,7 +62,7 @@ class UsersController < ApplicationController
 
       if @user.save
         flash[:info] = "Instructions has been to your email"
-        send_email()
+        send_email
       else
         flash[:danger] = "Error! try again"
       end
