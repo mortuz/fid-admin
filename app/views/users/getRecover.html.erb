@@ -1,0 +1,18 @@
+<div class="card-container">
+  <div class="card form-card mt-5">
+    <div class="card-header">
+      <h2>Recover Account</h2>
+    </div>
+    <%= form_for :recover, url: 'recover', methid: 'post' do |f| %>
+
+      <div class="form-group">
+        <%= f.label :email, class: "form-label" %>
+        <%= f.text_field :email, class: "form-control", placeholder: "Enter email" %>
+      </div>
+      
+      <%= f.submit "recover", class: "btn btn-primary" %>
+
+    <% end %>
+    <%= link_to  "Sign in", login_path, class: "btn btn-link text-left pl-0" %>
+  </div>
+</div> 
