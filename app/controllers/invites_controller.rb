@@ -1,6 +1,7 @@
 class InvitesController < ApplicationController
   require 'mailgun'
-  before_action :require_user
+  before_action :require_admin
+  
   def index
     @invites = Invite.all
   end
@@ -80,6 +81,13 @@ class InvitesController < ApplicationController
       result = mg_client.send_message('idevia.in', mb_obj).to_h!
             
       puts result
+    end
+
+    def require_admin
+      if logged_in? and !current_user.admin?
+        flash[:danger] = "Only admin can perform that action"
+        redirect_to root_path
+      end
     end
 
 end

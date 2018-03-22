@@ -1,5 +1,11 @@
 class PagesController < ApplicationController
   def index
-    redirect_to invites_path if logged_in?
+    if logged_in?
+      if current_user.admin?
+        redirect_to invites_path
+      else
+        redirect_to mailer_path
+      end
+    end
   end
 end
