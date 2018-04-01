@@ -5,7 +5,7 @@
       <h2>Upload bulk users</h2>
     </div>
     <div class="card-body">
-      <button class="btn btn-primary" id="csv-trigger"><i class="material-icons">file_upload</i> Upload bulk</button>
+      <button class="btn btn-dark-outline" id="csv-trigger"><i class="material-icons">file_upload</i> Upload bulk</button>
       <input type="file" name="csv" class="hidden" id="csv" hidden accept=".csv">
     </div>
   </div>
@@ -14,7 +14,7 @@
 <div class="container">
   <%= form_for( :bulk ) do |f| %>
     <%= f.hidden_field :data, id: "form-data" %>
-    <%= f.submit "Add all users", class: "btn submit-btn float-right btn-primary"%>
+    <%= f.submit "Add all users", class: "btn submit-btn float-right btn-dark-outline"%>
   <% end %>
   <div class="bulk-list mt-5"></div>
 </div>
