@@ -8,7 +8,7 @@ class UsersController < ApplicationController
       @user = User.new
     else
       puts "no User found"
-      render "dash"
+      redirect_to root_path
     end
   end
 
@@ -25,7 +25,9 @@ class UsersController < ApplicationController
     puts @user
 
     if !@user
-      render "dash"
+      # render "dash"
+      flash[:danger] = "Something went wrong"
+      redirect_to root_path
       # redirect_to recover_path
     else
 

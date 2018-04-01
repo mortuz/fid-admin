@@ -15,6 +15,10 @@ Rails.application.routes.draw do
 
   get '/reset', to: 'users#getReset'
   post '/reset', to: 'users#postReset'
+
+  get '/invites/all', to: 'invites#getall'
+  get '/invites/bulk', to: 'invites#getBulk'
+  post '/invites/bulk', to: 'invites#postBulk'
   resources :users
 
   # Invites

@@ -52,13 +52,68 @@ class InvitesController < ApplicationController
       redirect_to invites_path
     end    
   end
+
+  def getall
+    render json: @invites = Invite.all
+  end
+
+  def postBulk
+    contacts = JSON.parse params[:bulk][:data]
+    
+    contacts.each do |contact|
+      invite = Invite.new
+      invite.name = contact["name"]
+      invite.email = contact["email"]
+      puts invite
+      # @invite.name = contact.name
+      # @invite.email = contact.email
+      hash = SecureRandom.urlsafe_base64.to_s
+      invite.invite_token = hash
+
+      if invite.save
+        
+        # send mail start
+        
+        host = Rails.env.development? ? "http://localhost:3000" : "https://awesome-fidiyo.herokuapp.com"      
+        email = invite.name
+        name = invite.email
+        token = invite.invite_token
+        message = "<html><body><p>Hello #{name}! You have been added to an <strong>Awesome App</strong>. Click <a href='#{host}/users/new?t=#{token}'>#{host}/users/new?t=#{token}</a> to access your account.</p></body></html>"
+        sender = "#{current_user.name} <#{current_user.email}>"
+        puts message
+        # First, instantiate the Mailgun Client with your API key
+        mg_client = Mailgun::Client.new 'key-9793adf968a4fb57cc6f619b58b98d4c'
+      
+        mb_obj = Mailgun::MessageBuilder.new
+
+        # Define the from address.
+        mb_obj.from(current_user.email, {"first"=>current_user.name, "last" => ""})
+
+        # Define a to recipient.
+        mb_obj.add_recipient(:to, email, {"first" => name, "last" => ""})
+        mb_obj.subject("An awesome app invite!")
+        # Define the HTML text of the message
+        mb_obj.body_html(message)
+        # Send your message through the client
+        result = mg_client.send_message('idevia.in', mb_obj).to_h!
+              
+        puts result
+
+        # send mail end
+      # else
+      end
+    end
+    flash[:success] = "Contacts successfully added"
+    redirect_to invites_path
+  end
+
   private
     def invite_params
       params.require(:invite).permit(:name, :email)
     end
 
     def send_email
-      host = Rails.env.development? ? "http://localhost" : "https://awesome-fidiyo.herokuapp.com"      
+      host = Rails.env.development? ? "http://localhost:3000" : "https://awesome-fidiyo.herokuapp.com"      
       email = params[:invite][:email]
       name = params[:invite][:name]
       token = @invite.invite_token
