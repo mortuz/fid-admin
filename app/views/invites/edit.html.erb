@@ -3,6 +3,10 @@
   <div class="card form-card mt-5">
     <div class="card-header">
       <h2>Edit people</h2>
+      <%= button_to invite_path(@invite), method: :delete, class: "close cur-p delete-button", type: "button", data: {confirm: "Are you sure want to delete this user and it's contacts?"} do %>
+        <i class="material-icons">delete</i>
+      <% end %>
+      
     </div>
     <div class="card-body">
       <%= form_for @invite do |f| %>
@@ -22,10 +26,12 @@
             <%= check_box_tag :send_email %> Select if you want to resend email requesting password reset to user.
           </label>
         </div>
-  
-        <%= f.submit "Save", class: "btn btn-outline-dark" %>
+        <div class="float-right">
+          <%= f.submit "Save", class: "btn btn-theme btn-outline" %>
+          <%= link_to  "Cancel", invites_path, class: "btn btn-theme btn-outline" %>
+        </div>
+        
       <% end %>
-      <%= link_to  "Cancel", invites_path, class: "btn btn-link pl-0" %>
     </div>
   </div>
 </div>

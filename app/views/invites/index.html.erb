@@ -1,17 +1,25 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-    <%= link_to  "Add people", new_invite_path, class: "btn btn-primary mb-5" %>
-    <%= link_to  "Upload bulk", invites_bulk_path, class: "btn btn-primary mb-5" %>
-      <% @invites.each do |invite| %>
-        <ul class="list-group">
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <%= invite.name  %> ( <%= invite.email %> )
-            
-            <%= link_to  "Edit", edit_invite_path(invite), class: "btn btn-outline-dark btn-sm"  %>
-          </li>
-        </ul>
-      <% end %>
+    <%= link_to  "Add people", new_invite_path, class: "btn btn-outline-dark mb-5" %>
+    <%= link_to  "Upload bulk", invites_bulk_path, class: "btn btn-outline-dark mb-5" %>
+      
+        <table class="table">
+          <tbody>
+          <% @invites.each do |invite| %>
+            <tr>
+              <td>
+                <%= link_to edit_invite_path(invite), class: "btn btn-outline btn-sm" do  %>
+                  <i class="material-icons">edit</i> 
+                <% end %>
+                <%= invite.name  %>
+              </td>
+              <td><%= invite.email %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      
     </div>
   </div>
 </div>

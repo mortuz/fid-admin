@@ -53,6 +53,25 @@ class InvitesController < ApplicationController
     end    
   end
 
+  def  destroy
+    @invite = Invite.find(params[:id])
+    # puts current_user.id
+    if @invite
+      @user = User.find_by email: @invite.email
+      if @user
+        if current_user.id == @user.id
+          flash[:danger] = "You can not delete yourself"
+          redirect_to invites_path and return
+        else
+          @user.destroy
+        end
+      end
+      @invite.destroy
+      flash[:success] = "#{@invite.name} is successfully deleted"
+    end
+    redirect_to invites_path
+  end
+
   def getall
     render json: @invites = Invite.all
   end
@@ -75,12 +94,13 @@ class InvitesController < ApplicationController
         # send mail start
         
         host = Rails.env.development? ? "http://localhost:3000" : "https://awesome-fidiyo.herokuapp.com"      
-        email = invite.name
-        name = invite.email
+        user_email = invite.email
+        name = invite.name
         token = invite.invite_token
         message = "<html><body><p>Hello #{name}! You have been added to an <strong>Awesome App</strong>. Click <a href='#{host}/users/new?t=#{token}'>#{host}/users/new?t=#{token}</a> to access your account.</p></body></html>"
         sender = "#{current_user.name} <#{current_user.email}>"
         puts message
+        puts user_email
         # First, instantiate the Mailgun Client with your API key
         mg_client = Mailgun::Client.new 'key-9793adf968a4fb57cc6f619b58b98d4c'
       
@@ -90,7 +110,7 @@ class InvitesController < ApplicationController
         mb_obj.from(current_user.email, {"first"=>current_user.name, "last" => ""})
 
         # Define a to recipient.
-        mb_obj.add_recipient(:to, email, {"first" => name, "last" => ""})
+        mb_obj.add_recipient(:to, user_email, {"first" => name, "last" => ""})
         mb_obj.subject("An awesome app invite!")
         # Define the HTML text of the message
         mb_obj.body_html(message)

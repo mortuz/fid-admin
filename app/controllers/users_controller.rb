@@ -96,6 +96,11 @@ class UsersController < ApplicationController
     end
 
   end
+
+  def destroy
+    @user = User.find(params[:id])
+    puts @user.name
+  end
   
   private
     def user_params

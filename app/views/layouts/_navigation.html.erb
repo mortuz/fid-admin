@@ -1,23 +1,29 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <%= link_to  "Awesome App", root_path, class: "navbar-brand" %>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav ml-auto">
-      <% if logged_in? %>
-        <% if current_user.admin? %>
-          <li class="nav-item">
-            <%= link_to  "Users", invites_path, class: "nav-link" %>
-          </li>
-        <% end %>
-        <li class="nav-item">
-          <%= link_to  "Send mail", mailer_path, class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to  "Logout", logout_path, method: :delete, class: "nav-link" %>
-        </li>
-      <% end %>
-    </ul>
+
+<nav  class="navbar navbar-light bg-white">
+  <div  class="container">
+    <a  class="navbar-brand" ng-reflect-router-link="/" href="/">
+      <img  alt="Fidiyo" class="logo" src="/official/logo-grey.png">
+    </a>
+
+    <% if logged_in? %>
+      <div  class="ml-auto">
+      
+        <div  class="dropdown">
+          <button  class="navbar-toggler" data-toggle="dropdown">
+            <i  class="material-icons mx-auto">more_vert</i>
+          </button>
+          <div  class="dropdown-menu dropdown-menu-right">
+            <% if current_user.admin? %>
+              <%= link_to  "Users", invites_path, class: "dropdown-item" %>
+            <% end %>
+            <%= link_to  "Send mail", mailer_path, class: "dropdown-item" %>
+            <%= link_to  "Logout", logout_path, method: :delete, class: "dropdown-item" %>
+            
+          </div>
+        </div>
+      </div>
+    <% end %>
+
   </div>
+
 </nav>

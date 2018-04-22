@@ -3,6 +3,7 @@
   <div class="card form-card mt-5 text-center">
     <div class="card-header">
       <h2>Upload bulk users</h2>
+      <p>( CSV Format: name,email )</p>
     </div>
     <div class="card-body">
       <button class="btn btn-dark-outline" id="csv-trigger"><i class="material-icons">file_upload</i> Upload bulk</button>
@@ -12,13 +13,40 @@
 </div>
 
 <div class="container">
-  <%= form_for( :bulk ) do |f| %>
-    <%= f.hidden_field :data, id: "form-data" %>
-    <%= f.submit "Add all users", class: "btn submit-btn float-right btn-dark-outline"%>
-  <% end %>
+  
   <div class="bulk-list mt-5"></div>
 </div>
 
+<div  class="navbar-light bg-light fixed-bottom" id="navigation" style="max-height:20vh;">
+
+  <div  class="container-fluid">
+    <div  class="row">
+      <div  class="col-6">
+        <div  class="d-flex justify-content-start">
+          <div  class="p-2">
+            <%= link_to invites_path, class: "btn btn-outline-dark" do %>
+              <i  class="material-icons">arrow_back</i>
+            <% end %>
+          </div>
+        </div>
+      </div> 
+
+      <div  class="col-6">
+          <div  class="d-flex justify-content-end">
+            <div  class="p-2">
+            <%= form_for( :bulk ) do |f| %>
+              <%= f.hidden_field :data, id: "form-data" %>
+              <%= button_tag class: "btn submit-btn btn-outline-dark" do%>
+                <i  class="material-icons">arrow_forward</i>
+              <% end %>
+            <% end %>
+              
+            </div>
+          </div>
+      </div> 
+    </div> 
+  </div> 
+</div>
 <script>
 
   $('#csv-trigger').on('click', function() {
@@ -55,7 +83,7 @@
 
         var headings = entries.splice(0, record_num);
         var html = "";
-        html += "<ul class=\"list-group\">";
+        html += "<table class=\"table\"><tbody>";
         for (let i = 1; i < allTextLines.length; i++) {
           const line = allTextLines[i];
           const lineArr = line.split(',');
@@ -74,13 +102,15 @@
 
           html += `
             
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              ${lineArr[0]} ( ${lineArr[1]} )
-              <span class="badge badge-primary badge-pill" ${exists}>Already added</span>
-            </li>
+            <tr class="">
+              <td>${lineArr[0]}</td>
+              <td>${lineArr[1]}</td>
+              <td class="text-right"><span class="badge bg-light badge-pill" ${exists}>Already added</span></td>
+              
+            </tr>
           `          
         }
-        html += "</ul>";
+        html += "</tbody></table>";
 
         //add the data in form field
         $('#form-data').val(JSON.stringify(lines));
