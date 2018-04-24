@@ -15,6 +15,7 @@
           <div  class="dropdown-menu dropdown-menu-right">
             <% if current_user.admin? %>
               <%= link_to  "Users", invites_path, class: "dropdown-item" %>
+              <%= link_to  "Clients", clients_path, class: "dropdown-item" %>
             <% end %>
             <%= link_to  "Send mail", mailer_path, class: "dropdown-item" %>
             <%= link_to  "Logout", logout_path, method: :delete, class: "dropdown-item" %>
