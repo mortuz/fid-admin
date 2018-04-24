@@ -1,0 +1,37 @@
+<%= render 'shared/errors', obj: @client %>
+<div class="card-container">
+  <div class="card form-card mt-5">
+    <div class="card-header">
+      <h2>Edit client</h2>
+      <%= button_to client_path(@client), method: :delete, class: "close cur-p delete-button", type: "button", data: {confirm: "Are you sure want to delete this client?"} do %>
+        <i class="material-icons">delete</i>
+      <% end %>
+      
+    </div>
+    <div class="card-body">
+      <%= form_for @client do |f| %>
+  
+        <div class="form-group">
+          <%= f.label :name, class: "form-label" %>
+            <%= f.text_field :name, class: "form-control", placeholder: "Enter name"  %>
+        </div>
+  
+        <div class="form-group">
+          <%= f.label :email, class: "form-label" %>
+            <%= f.text_field :email, class: "form-control", placeholder: "Enter email"  %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :group, class: "form-label" %>
+            <%= f.text_field :group, class: "form-control", placeholder: "Enter group"  %>
+        </div>
+
+        <div class="float-right">
+          <%= f.submit "Save", class: "btn btn-theme btn-outline" %>
+          <%= link_to  "Cancel", clients_path, class: "btn btn-theme btn-outline" %>
+        </div>
+        
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -123,7 +123,7 @@ class InvitesController < ApplicationController
       # else
       end
     end
-    flash[:success] = "Contacts successfully added"
+    flash[:success] = "Users successfully added"
     redirect_to invites_path
   end
 

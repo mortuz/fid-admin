@@ -1,0 +1,120 @@
+
+<div class="card-container uploader">
+  <div class="card form-card mt-5 text-center">
+    <div class="card-header">
+      <h2>Upload bulk clients</h2>
+      <p>( CSV Format: name,email )</p>
+    </div>
+    <div class="card-body">
+      <button class="btn btn-dark-outline" id="csv-trigger"><i class="material-icons">file_upload</i> Upload bulk</button>
+      <input type="file" name="csv" class="hidden" id="csv" hidden accept=".csv">
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  
+  <div class="bulk-list mt-5"></div>
+</div>
+
+<div  class="navbar-light bg-light fixed-bottom" id="navigation" style="max-height:20vh;">
+
+  <div  class="container-fluid">
+    <div  class="row">
+      <div  class="col-6">
+        <div  class="d-flex justify-content-start">
+          <div  class="p-2">
+            <%= link_to invites_path, class: "btn btn-outline-dark" do %>
+              <i  class="material-icons">arrow_back</i>
+            <% end %>
+          </div>
+        </div>
+      </div> 
+
+      <div  class="col-6">
+          <div  class="d-flex justify-content-end">
+            <div  class="p-2">
+            <%= form_for( :bulk ) do |f| %>
+              <%= f.hidden_field :data, id: "form-data" %>
+              <%= button_tag class: "btn submit-btn btn-outline-dark" do%>
+                <i  class="material-icons">arrow_forward</i>
+              <% end %>
+            <% end %>
+              
+            </div>
+          </div>
+      </div> 
+    </div> 
+  </div> 
+</div>
+<script>
+
+  $('#csv-trigger').on('click', function() {
+    $('#csv').click();
+  });
+
+  $(function(){
+
+    $('.submit-btn').hide();
+
+    var contacts;
+    var count = 0;
+
+    $('#csv').change(function(){
+    console.log($(this));
+
+     var reader = new FileReader();
+      reader.onload = function () {
+        var data = reader.result;
+        var allTextLines = data.split(/\r\n|\n/);
+        var entries = allTextLines[0].split(',');
+        var lines = [];
+        record_num = 2;
+
+        var headings = entries.splice(0, record_num);
+        var html = "";
+        html += "<table class=\"table\"><thead><tr><th>Name</th><th>Email</th><th>Group</th></tr></thead><tbody>";
+        for (let i = 1; i < allTextLines.length; i++) {
+          const line = allTextLines[i];
+          const lineArr = line.split(',');
+
+          if (!lineArr[0] || !lineArr[1]) continue;
+
+
+          lines.push({
+            name: lineArr[0],
+            email: lineArr[1],
+            group: lineArr[2] || ''
+          });
+          
+
+          html += `
+            
+            <tr class="">
+              <td>${lineArr[0]}</td>
+              <td>${lineArr[1]}</td>
+              <td>${lineArr[2] || 'ungrouped'}</td>
+            </tr>
+          `          
+        }
+        html += "</tbody></table>";
+
+        //add the data in form field
+        $('#form-data').val(JSON.stringify(lines));
+        $('.submit-btn').show();
+
+        //if(count) {
+        //  $('.bulk-list').prepend('<h2>'+count+' contacts already added</h2>')
+        //}
+
+        $('.bulk-list').append(html);
+        //console.log('lines', lines);
+        $('.uploader').hide();
+      };
+      // start reading the file. When it is done, calls the onload event defined above.
+      reader.readAsBinaryString($(this)[0].files[0]);
+
+    })
+
+  })
+</script>

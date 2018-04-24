@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <%= link_to  "Add client", new_client_path, class: "btn btn-outline-dark mb-5" %>
+      <%= link_to  "Upload bulk", clients_bulk_path, class: "btn btn-outline-dark mb-5" %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Group</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @clients.each do |client| %>
+            <tr>
+              <td>
+                <%= link_to edit_client_path(client), class: "btn btn-outline btn-sm" do  %>
+                  <i class="material-icons">edit</i> 
+                <% end %>
+                <%= client.name  %>
+              </td>
+              <td><%= client.email %></td>
+              <td><%= client.group %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      
+    </div>
+  </div>
+</div>

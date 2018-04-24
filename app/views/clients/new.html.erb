@@ -1,0 +1,30 @@
+<%= render 'shared/errors', obj: @client %>
+<div class="card-container">
+  <div class="card form-card mt-5">
+    <div class="card-header">
+      <h2>Add client</h2>
+    </div>
+    <div class="card-body">
+      <%= form_for @client do |f| %>
+  
+        <div class="form-group">
+          <%= f.label :name, class: "form-label" %>
+            <%= f.text_field :name, class: "form-control", placeholder: "Enter name"  %>
+        </div>
+  
+        <div class="form-group">
+          <%= f.label :email, class: "form-label" %>
+            <%= f.text_field :email, class: "form-control", placeholder: "Enter email"  %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :group, class: "form-label" %>
+            <%= f.text_field :group, class: "form-control", placeholder: "Enter group"  %>
+        </div>
+  
+        <%= f.submit "Save", class: "btn btn-primary" %>
+      <% end %>
+      <%= link_to  "Cancel", invites_path, class: "btn btn-link pl-0" %>
+    </div>
+  </div>
+</div>

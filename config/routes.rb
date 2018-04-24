@@ -23,4 +23,9 @@ Rails.application.routes.draw do
 
   # Invites
   resources :invites
+
+  # clients
+  get '/clients/bulk', to: 'clients#getBulk'
+  post '/clients/bulk', to: 'clients#postBulk'
+  resources :clients
 end
