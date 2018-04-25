@@ -1,5 +1,6 @@
 class InvitesController < ApplicationController
   require 'mailgun'
+  before_action :require_user  
   before_action :require_admin
   skip_before_action :verify_authenticity_token, only: [:create]
 
@@ -74,6 +75,9 @@ class InvitesController < ApplicationController
 
   def getall
     render json: @invites = Invite.all
+  end
+  
+  def getBulk
   end
 
   def postBulk
@@ -160,6 +164,7 @@ class InvitesController < ApplicationController
     end
 
     def require_admin
+      puts "checking admin permission"
       if logged_in? and !current_user.admin?
         flash[:danger] = "Only admin can perform that action"
         redirect_to root_path

@@ -1,4 +1,7 @@
 class ClientsController < ApplicationController
+  before_action :require_user
+  before_action :require_admin
+
   def show
   end
   def new
@@ -65,5 +68,13 @@ class ClientsController < ApplicationController
   private
     def client_params
       params.require(:client).permit(:name, :email, :group)
+    end
+
+    def require_admin
+      puts logged_in? and !current_user.admin?
+      if logged_in? and !current_user.admin?
+        flash[:danger] = "Only admin can perform that action"
+        redirect_to root_path
+      end
     end
 end

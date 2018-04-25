@@ -6,6 +6,7 @@
       <p>( CSV Format: name,email )</p>
     </div>
     <div class="card-body">
+    <span class="help text-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Need help?</span>
       <button class="btn btn-dark-outline" id="csv-trigger"><i class="material-icons">file_upload</i> Upload bulk</button>
       <input type="file" name="csv" class="hidden" id="csv" hidden accept=".csv">
     </div>
@@ -47,6 +48,30 @@
     </div> 
   </div> 
 </div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content p-3">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="mt-2"><strong>1. Enter users' details in excel sheet</strong></p>
+          <img src="/official/excel-user.png" alt="excel client" class="img-responsive mb-3">
+
+          <p class="mt-2"><strong>2. Save as CSV</strong></p>
+          <img src="/official/save-as.png" alt="save excel sheet" class="img-responsive mb-3">
+
+          <p class="mt-2"><strong>3. Choose TEXT format (if asks)</strong></p>
+          <img src="/official/format.png" alt="save format" class="img-responsive mb-3">
+
+          <p class="mt-2"><strong>4. Make the values comma separated</strong></p>
+          <img src="/official/comma-separated.png" alt="Separate Values by comma" class="img-responsive mb-3">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 
   $('#csv-trigger').on('click', function() {
